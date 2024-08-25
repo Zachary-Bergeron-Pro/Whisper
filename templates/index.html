@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Whisper Transcription</title>
+</head>
+<body>
+    <h1>Transcription d'Audio avec Whisper</h1>
+    <form action="/transcribe" method="post" enctype="multipart/form-data">
+        <label for="file">Choisissez un fichier audio:</label><br>
+        <input type="file" id="file" name="file" accept="audio/*" required><br><br>
+        <input type="submit" value="Transcrire">
+    </form>
+    <div id="result"></div>
+
+    <script>
+        const form = document.querySelector('form');
+        form.onsubmit = async (e) => {
+            e.preventDefault();
+            const formData = new FormData(form);
+            const response = await fetch('/transcribe', {
+                method: 'POST',
+                body: formData
+            });
+            const result = await response.json();
+            document.getElementById('result').innerText = result.transcription || result.error;
+        };
+    </script>
+</body>
+</html>
