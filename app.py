@@ -1,3 +1,4 @@
+import os  # Add this import statement
 from app import create_app
 
 app = create_app()
